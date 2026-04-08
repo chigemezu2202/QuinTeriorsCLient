@@ -1,0 +1,165 @@
+"use client";
+
+import { Textarea } from "@/components/ui/textarea";
+import { useSelect } from "@refinedev/core";
+import { useForm } from "@refinedev/react-hook-form";
+import { useRouter } from "next/navigation";
+
+import { EditView } from "@/components/refine-ui/views/edit-view";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
+
+export default function PagesEdit() {
+  const router = useRouter();
+
+  const {
+    refineCore: { onFinish, query },
+    ...form
+  } = useForm({
+    refineCoreProps: {},
+  });
+
+
+
+  function onSubmit(values: Record<string, any>) {
+    onFinish(values);
+  }
+
+  return (
+    <EditView>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder="Enter title"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="slug"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Slug</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder="Enter slug"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="content"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Content</FormLabel>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    value={field.value || ""}
+                    placeholder="Enter content"
+                    rows={6}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="meta_title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Meta title</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder="Enter meta title"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="meta_description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Meta description</FormLabel>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    value={field.value || ""}
+                    placeholder="Enter meta description"
+                    rows={6}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="is_published"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-center justify-between rounded-md border p-4">
+                <FormLabel className="m-0">Published</FormLabel>
+                <FormControl>
+                  <input
+                    type="checkbox"
+                    checked={!!field.value}
+                    onChange={(e) => field.onChange(e.target.checked)}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
+          <div className="flex gap-2">
+            <Button
+              type="submit"
+              {...form.saveButtonProps}
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting ? "Updating..." : "Update"}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => router.back()}
+            >
+              Cancel
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </EditView>
+  );
+}

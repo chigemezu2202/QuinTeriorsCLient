@@ -6,7 +6,7 @@ import React from "react";
 
 import routerProvider from "@refinedev/nextjs-router";
 
-import "@/app/globals.css";
+import "./globals.css";
 import { Toaster } from "@/components/refine-ui/notification/toaster";
 import { useNotificationProvider } from "@/components/refine-ui/notification/use-notification-provider";
 import { ThemeProvider } from "@/components/refine-ui/theme/theme-provider";
@@ -30,23 +30,115 @@ export const RefineContext = ({ children }: RefineContextProps) => {
           routerProvider={routerProvider}
           resources={[
             {
-              name: "blog_posts",
-              list: "/blog-posts",
-              create: "/blog-posts/create",
-              edit: "/blog-posts/edit/:id",
-              show: "/blog-posts/show/:id",
+              name: "dashboard",
+              list: "/dashboard",
               meta: {
-                canDelete: true,
+                canDelete: false,
+                canEdit: false,
+                canShow: false,
+                canCreate: false,
+                label: "Dashboard",
               },
             },
             {
-              name: "categories",
-              list: "/categories",
-              create: "/categories/create",
-              edit: "/categories/edit/:id",
-              show: "/categories/show/:id",
+              name: "settings",
+              list: "/settings",
+              create: "/settings/create",
+              edit: "/settings/edit/:id",
+              show: "/settings/show/:id",
               meta: {
-                canDelete: true,
+                canDelete: false,
+                label: "Settings",
+              },
+            },
+            {
+              name: "leads",
+              list: "/leads",
+              create: "/leads/create",
+              edit: "/leads/edit/:id",
+              show: "/leads/show/:id",
+              meta: {
+                label: "Leads",
+              },
+            },
+            {
+              name: "services",
+              list: "/services",
+              create: "/services/create",
+              edit: "/services/edit/:id",
+              show: "/services/show/:id",
+              meta: {
+                label: "Services",
+              },
+            },
+            {
+              name: "service-items",
+              list: "/service-items",
+              create: "/service-items/create",
+              edit: "/service-items/edit/:id",
+              show: "/service-items/show/:id",
+              meta: {
+                label: "Service Items",
+              },
+            },
+            {
+              name: "uploads",
+              list: "/uploads",
+              create: "/uploads/create",
+              edit: "/uploads/edit/:id",
+              show: "/uploads/show/:id",
+              meta: {
+                label: "Uploads",
+              },
+            },
+            {
+              name: "admins",
+              list: "/admins",
+              create: "/admins/create",
+              edit: "/admins/edit/:id",
+              show: "/admins/show/:id",
+              meta: {
+                label: "Admins",
+              },
+            },
+            {
+              name: "pages",
+              list: "/pages",
+              create: "/pages/create",
+              edit: "/pages/edit/:id",
+              show: "/pages/show/:id",
+              meta: {
+                label: "Pages",
+              },
+            },
+            {
+              name: "testimonials",
+              list: "/testimonials",
+              create: "/testimonials/create",
+              edit: "/testimonials/edit/:id",
+              show: "/testimonials/show/:id",
+              meta: {
+                label: "Testimonials",
+              },
+            },
+            {
+              name: "gallery",
+              list: "/gallery",
+              create: "/gallery/create",
+              edit: "/gallery/edit/:id",
+              show: "/gallery/show/:id",
+              meta: {
+                label: "Gallery",
+              },
+            },
+            {
+              name: "portfolio",
+              list: "/portfolio",
+              create: "/portfolio/create",
+              edit: "/portfolio/edit/:id",
+              show: "/portfolio/show/:id",
+              meta: {
+                label: "Portfolio",
               },
             },
           ]}

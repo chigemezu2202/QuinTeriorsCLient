@@ -1,0 +1,132 @@
+"use client";
+
+import { Textarea } from "@/components/ui/textarea";
+import { useSelect } from "@refinedev/core";
+import { useForm } from "@refinedev/react-hook-form";
+import { useRouter } from "next/navigation";
+
+import { CreateView } from "@/components/refine-ui/views/create-view";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
+
+export default function TestimonialsCreate() {
+  const router = useRouter();
+
+  const {
+    refineCore: { onFinish },
+    ...form
+  } = useForm({
+    refineCoreProps: {},
+  });
+
+
+
+  function onSubmit(values: Record<string, any>) {
+    onFinish(values);
+  }
+
+  return (
+    <CreateView>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder="Enter name"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="message"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Message</FormLabel>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    value={field.value || ""}
+                    placeholder="Enter message"
+                    rows={6}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="rating"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Rating</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    {...field}
+                    value={field.value ?? ""}
+                    placeholder="Enter rating"
+                    min={1}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="is_featured"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-center justify-between rounded-md border p-4">
+                <FormLabel className="m-0">Featured</FormLabel>
+                <FormControl>
+                  <input
+                    type="checkbox"
+                    checked={!!field.value}
+                    onChange={(e) => field.onChange(e.target.checked)}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
+          <div className="flex gap-2">
+            <Button
+              type="submit"
+              {...form.saveButtonProps}
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting ? "Creating..." : "Create"}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => router.back()}
+            >
+              Cancel
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </CreateView>
+  );
+}
