@@ -8,7 +8,7 @@ import { DeleteButton } from "@/components/refine-ui/buttons/delete";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
 import { ShowButton } from "@/components/refine-ui/buttons/show";
 import { DataTable } from "@/components/refine-ui/data-table/data-table";
-import { ListView } from "@/components/refine-ui/views/list-view";
+import { ListView, ListViewHeader } from "@/components/refine-ui/views/list-view";
 import { Badge } from "@/components/ui/badge";
 
 type ServiceItems = {
@@ -64,13 +64,15 @@ export default function ServiceItemsList() {
   const table = useTable({
     columns,
     refineCoreProps: {
+      resource: "service-items",
       syncWithLocation: true,
     },
   });
 
   return (
     <ListView>
-      <DataTable table={table} />
+      <ListViewHeader />
+<DataTable table={table} />
     </ListView>
   );
 }

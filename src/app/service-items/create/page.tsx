@@ -5,7 +5,7 @@ import { useSelect } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import { useRouter } from "next/navigation";
 
-import { CreateView } from "@/components/refine-ui/views/create-view";
+import { CreateView, CreateViewHeader } from "@/components/refine-ui/views/create-view";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -37,7 +37,8 @@ export default function ServiceItemsCreate() {
 
   return (
     <CreateView>
-      <Form {...form}>
+      <CreateViewHeader />
+<Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}

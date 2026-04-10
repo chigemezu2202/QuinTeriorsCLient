@@ -2,7 +2,7 @@
 
 import { useShow } from "@refinedev/core";
 
-import { ShowView } from "@/components/refine-ui/views/show-view";
+import { ShowView, ShowViewHeader } from "@/components/refine-ui/views/show-view";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -14,12 +14,13 @@ import {
 import { Separator } from "@/components/ui/separator";
 
 export default function ServicesShow() {
-  const { result: record, query } = useShow({});
+  const { result: record, query } = useShow({ resource: "services" });
 
   const { isLoading } = query;
 
   return (
     <ShowView>
+      <ShowViewHeader />
       <div className="space-y-6">
         <Card>
           <CardHeader>

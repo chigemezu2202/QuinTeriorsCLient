@@ -1,3 +1,4 @@
+import { ShowView, ShowViewHeader } from "@/components/refine-ui/views/show-view";
 "use client";
 
 import { useShow } from "@refinedev/core";
@@ -14,13 +15,14 @@ import {
 import { Separator } from "@/components/ui/separator";
 
 export default function GalleryShow() {
-  const { result: record, query } = useShow({});
+  const { result: record, query } = useShow({ resource: "gallery" });
 
   const { isLoading } = query;
 
   return (
     <ShowView>
-      <div className="space-y-6">
+      <ShowViewHeader />
+<div className="space-y-6">
         <Card>
           <CardHeader>
             <CardTitle>{record?.title || record?.id}</CardTitle>

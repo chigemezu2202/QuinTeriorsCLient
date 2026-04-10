@@ -1,8 +1,7 @@
 "use client";
 
 import { useShow, useOne } from "@refinedev/core";
-
-import { ShowView } from "@/components/refine-ui/views/show-view";
+import { ShowView, ShowViewHeader } from "@/components/refine-ui/views/show-view";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -14,7 +13,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 
 export default function LeadsShow() {
-  const { result: record, query } = useShow({});
+  const { result: record, query } = useShow({ resource: "leads" });
   const {
     result: service,
     query: { isLoading: serviceIsLoading },
@@ -30,7 +29,8 @@ export default function LeadsShow() {
 
   return (
     <ShowView>
-      <div className="space-y-6">
+      <ShowViewHeader />
+<div className="space-y-6">
         <Card>
           <CardHeader>
             <CardTitle>{record?.name || record?.id}</CardTitle>

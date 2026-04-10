@@ -5,7 +5,7 @@ import { useSelect } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import { useRouter } from "next/navigation";
 
-import { EditView } from "@/components/refine-ui/views/edit-view";
+import { EditView, EditViewHeader } from "@/components/refine-ui/views/edit-view";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,11 +21,11 @@ import { Input } from "@/components/ui/input";
 export default function ServicesEdit() {
   const router = useRouter();
 
-  const {
-    refineCore: { onFinish, query },
-    ...form
-  } = useForm({
-    refineCoreProps: {},
+  const { refineCore: { onFinish, query }, ...form } = useForm({
+    refineCoreProps: {
+      resource: "services",
+      action: "edit",
+    },
   });
 
 
@@ -36,6 +36,7 @@ export default function ServicesEdit() {
 
   return (
     <EditView>
+      <EditViewHeader />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField

@@ -5,7 +5,7 @@ import { useSelect } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import { useRouter } from "next/navigation";
 
-import { EditView } from "@/components/refine-ui/views/edit-view";
+import { EditView, EditViewHeader } from "@/components/refine-ui/views/edit-view";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -37,6 +37,7 @@ export default function ServiceItemsEdit() {
 
   return (
     <EditView>
+      <EditViewHeader />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField

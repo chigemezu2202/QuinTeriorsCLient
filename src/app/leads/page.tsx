@@ -8,7 +8,7 @@ import { DeleteButton } from "@/components/refine-ui/buttons/delete";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
 import { ShowButton } from "@/components/refine-ui/buttons/show";
 import { DataTable } from "@/components/refine-ui/data-table/data-table";
-import { ListView } from "@/components/refine-ui/views/list-view";
+import { ListView, ListViewHeader } from "@/components/refine-ui/views/list-view";
 import { Badge } from "@/components/ui/badge";
 
 type Leads = {
@@ -76,12 +76,19 @@ export default function LeadsList() {
   const table = useTable({
     columns,
     refineCoreProps: {
+      resource: "leads",
       syncWithLocation: true,
-    },
+      pagination: {
+        currentPage: 1, // Use 'current' (or 'currentPage' depending on version)
+        pageSize: 10,
+        mode: "server", // Ensures pagination logic is active
+      },
+    }
   });
 
   return (
     <ListView>
+      <ListViewHeader />
       <DataTable table={table} />
     </ListView>
   );

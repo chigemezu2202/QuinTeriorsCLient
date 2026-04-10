@@ -3,7 +3,7 @@
 import type { AuthProvider } from "@refinedev/core";
 import Cookies from "js-cookie";
 
-const API_URL = "https://biz.nextechsphere.world/api/v1";
+const API_URL = "https://quin-teriors.vercel.app/api/v1";
 
 function readAuthCookie() {
   const auth = Cookies.get("auth");

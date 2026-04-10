@@ -1,3 +1,4 @@
+import { EditView, EditViewHeader } from "@/components/refine-ui/views/edit-view";
 "use client";
 
 import { Textarea } from "@/components/ui/textarea";
@@ -25,6 +26,9 @@ export default function SettingsEdit() {
     refineCore: { onFinish, query },
     ...form
   } = useForm({
+    resource: "settings",
+    action: "edit",
+
     refineCoreProps: {},
   });
 
@@ -36,7 +40,8 @@ export default function SettingsEdit() {
 
   return (
     <EditView>
-      <Form {...form}>
+      <EditViewHeader />
+<Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}

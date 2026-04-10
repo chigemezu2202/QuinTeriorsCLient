@@ -1,3 +1,4 @@
+import { ListView, ListViewHeader } from "@/components/refine-ui/views/list-view";
 "use client";
 
 import { useTable } from "@refinedev/react-table";
@@ -56,6 +57,7 @@ export default function GalleryList() {
   }, []);
 
   const table = useTable({
+    resource: "gallery",
     columns,
     refineCoreProps: {
       syncWithLocation: true,
@@ -64,7 +66,8 @@ export default function GalleryList() {
 
   return (
     <ListView>
-      <DataTable table={table} />
+      <ListViewHeader />
+<DataTable table={table} />
     </ListView>
   );
 }

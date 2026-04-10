@@ -1,3 +1,4 @@
+import { CreateView, CreateViewHeader } from "@/components/refine-ui/views/create-view";
 "use client";
 
 import { Textarea } from "@/components/ui/textarea";
@@ -25,6 +26,9 @@ export default function PortfolioCreate() {
     refineCore: { onFinish },
     ...form
   } = useForm({
+    resource: "portfolio",
+    action: "create",
+
     refineCoreProps: {},
   });
 
@@ -36,7 +40,8 @@ export default function PortfolioCreate() {
 
   return (
     <CreateView>
-      <Form {...form}>
+      <CreateViewHeader />
+<Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}

@@ -1,3 +1,4 @@
+import { ListView, ListViewHeader } from "@/components/refine-ui/views/list-view";
 "use client";
 
 import { useTable } from "@refinedev/react-table";
@@ -65,6 +66,7 @@ export default function TestimonialsList() {
   }, []);
 
   const table = useTable({
+    resource: "testimonials",
     columns,
     refineCoreProps: {
       syncWithLocation: true,
@@ -73,7 +75,8 @@ export default function TestimonialsList() {
 
   return (
     <ListView>
-      <DataTable table={table} />
+      <ListViewHeader />
+<DataTable table={table} />
     </ListView>
   );
 }
