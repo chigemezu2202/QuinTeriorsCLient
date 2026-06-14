@@ -1,9 +1,8 @@
-import { ShowView, ShowViewHeader } from "@/components/refine-ui/views/show-view";
 "use client";
 
 import { useShow, useOne } from "@refinedev/core";
 
-import { ShowView } from "@/components/refine-ui/views/show-view";
+import { ShowView, ShowViewHeader } from "@/components/refine-ui/views/show-view";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,

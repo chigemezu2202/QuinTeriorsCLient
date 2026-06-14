@@ -1,7 +1,6 @@
-import { EditView, EditViewHeader } from "@/components/refine-ui/views/edit-view";
 "use client";
 
-import { EditView } from "@/components/refine-ui/views/edit-view";
+import { EditView, EditViewHeader } from "@/components/refine-ui/views/edit-view";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -22,10 +21,10 @@ export default function CategoryEdit() {
     refineCore: { onFinish },
     ...form
   } = useForm({
-    resource: "categories",
-    action: "edit",
-
-    refineCoreProps: {},
+    refineCoreProps: {
+      resource: "categories",
+      action: "edit",
+    },
   });
 
   function onSubmit(values: Record<string, string>) {

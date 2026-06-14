@@ -1,7 +1,6 @@
-import { CreateView, CreateViewHeader } from "@/components/refine-ui/views/create-view";
 "use client";
 
-import { CreateView } from "@/components/refine-ui/views/create-view";
+import { CreateView, CreateViewHeader } from "@/components/refine-ui/views/create-view";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -22,10 +21,10 @@ export default function CategoryCreate() {
     refineCore: { onFinish },
     ...form
   } = useForm({
-    resource: "categories",
-    action: "create",
-
-    refineCoreProps: {},
+    refineCoreProps: {
+      resource: "categories",
+      action: "create",
+    },
   });
 
   function onSubmit(values: Record<string, string>) {
