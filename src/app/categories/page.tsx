@@ -1,3 +1,4 @@
+import { ListView, ListViewHeader } from "@/components/refine-ui/views/list-view";
 "use client";
 
 import { DeleteButton } from "@/components/refine-ui/buttons/delete";
@@ -46,6 +47,7 @@ export default function CategoryList() {
   }, []);
 
   const table = useTable({
+    resource: "categories",
     columns,
     refineCoreProps: {
       syncWithLocation: true,
@@ -54,7 +56,8 @@ export default function CategoryList() {
 
   return (
     <ListView>
-      <DataTable table={table} />
+      <ListViewHeader />
+<DataTable table={table} />
     </ListView>
   );
 }

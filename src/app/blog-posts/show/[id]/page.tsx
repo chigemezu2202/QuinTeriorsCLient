@@ -1,3 +1,4 @@
+import { ShowView, ShowViewHeader } from "@/components/refine-ui/views/show-view";
 "use client";
 
 import { useOne, useShow } from "@refinedev/core";
@@ -14,7 +15,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 
 export default function BlogPostShow() {
-  const { result: record, query } = useShow({});
+  const { result: record, query } = useShow({ resource: "blog-posts" });
 
   const {
     result: category,
@@ -30,7 +31,8 @@ export default function BlogPostShow() {
 
   return (
     <ShowView>
-      <div className="space-y-6">
+      <ShowViewHeader />
+<div className="space-y-6">
         <Card>
           <CardHeader>
             <CardTitle>{record?.title}</CardTitle>

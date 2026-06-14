@@ -1,3 +1,4 @@
+import { EditView, EditViewHeader } from "@/components/refine-ui/views/edit-view";
 "use client";
 
 import { EditView } from "@/components/refine-ui/views/edit-view";
@@ -21,6 +22,9 @@ export default function CategoryEdit() {
     refineCore: { onFinish },
     ...form
   } = useForm({
+    resource: "categories",
+    action: "edit",
+
     refineCoreProps: {},
   });
 
@@ -30,7 +34,8 @@ export default function CategoryEdit() {
 
   return (
     <EditView>
-      <Form {...form}>
+      <EditViewHeader />
+<Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}

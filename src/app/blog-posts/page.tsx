@@ -1,3 +1,4 @@
+import { ListView, ListViewHeader } from "@/components/refine-ui/views/list-view";
 "use client";
 
 import { useList } from "@refinedev/core";
@@ -117,7 +118,8 @@ export default function BlogPostList() {
 
   return (
     <ListView>
-      <DataTable table={table} />
+      <ListViewHeader />
+<DataTable table={table} />
     </ListView>
   );
 }

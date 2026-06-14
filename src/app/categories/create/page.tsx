@@ -1,3 +1,4 @@
+import { CreateView, CreateViewHeader } from "@/components/refine-ui/views/create-view";
 "use client";
 
 import { CreateView } from "@/components/refine-ui/views/create-view";
@@ -21,6 +22,9 @@ export default function CategoryCreate() {
     refineCore: { onFinish },
     ...form
   } = useForm({
+    resource: "categories",
+    action: "create",
+
     refineCoreProps: {},
   });
 
@@ -30,7 +34,8 @@ export default function CategoryCreate() {
 
   return (
     <CreateView>
-      <Form {...form}>
+      <CreateViewHeader />
+<Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}

@@ -3,55 +3,98 @@
 import type { AuthProvider } from "@refinedev/core";
 import Cookies from "js-cookie";
 
-const mockUsers = [
-  {
-    name: "John Doe",
-    email: "johndoe@mail.com",
-    roles: ["admin"],
-    avatar: "https://i.pravatar.cc/150?img=1",
-  },
-  {
-    name: "Jane Doe",
-    email: "janedoe@mail.com",
-    roles: ["editor"],
-    avatar: "https://i.pravatar.cc/150?img=1",
-  },
-];
+const API_URL = "https://quin-teriors.vercel.app/api/v1";
+
+function readAuthCookie() {
+  const auth = Cookies.get("auth");
+  if (!auth) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(auth) as {
+      token: string;
+      admin: { id: number; email: string; role: string };
+    };
+  } catch {
+    return null;
+  }
+}
 
 export const authProviderClient: AuthProvider = {
-  login: async ({ email, username, password, remember }) => {
-    // Suppose we actually send a request to the back end here.
-    const user = mockUsers[0];
+  login: async ({ email, password, remember }) => {
+    try {
+      const response = await fetch(`${API_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (user) {
-      Cookies.set("auth", JSON.stringify(user), {
-        expires: 30, // 30 days
+      if (!response.ok) {
+        const body = await response.json().catch(() => null);
+        return {
+          success: false,
+          error: {
+            name: "LoginError",
+            message:
+              body?.error || body?.message || "Invalid email or password",
+          },
+        };
+      }
+
+      const json = await response.json();
+      const data = (json?.data ?? json) as {
+        token: string;
+        admin: { id: number; email: string; role: string };
+      };
+
+      Cookies.set("auth", JSON.stringify(data), {
+        expires: remember ? 30 : 1,
         path: "/",
       });
+
       return {
         success: true,
-        redirectTo: "/",
+        redirectTo: "/dashboard",
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: {
+          name: "LoginError",
+          message:
+            error instanceof Error
+              ? error.message
+              : "Unable to log in, please try again.",
+        },
       };
     }
-
-    return {
-      success: false,
-      error: {
-        name: "LoginError",
-        message: "Invalid username or password",
-      },
-    };
   },
   logout: async () => {
+    const auth = readAuthCookie();
+
+    if (auth?.token) {
+      await fetch(`${API_URL}/auth/logout`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+          "Content-Type": "application/json",
+        },
+      }).catch(() => null);
+    }
+
     Cookies.remove("auth", { path: "/" });
+
     return {
       success: true,
       redirectTo: "/login",
     };
   },
   check: async () => {
-    const auth = Cookies.get("auth");
-    if (auth) {
+    const auth = readAuthCookie();
+    if (auth?.token) {
       return {
         authenticated: true,
       };
@@ -64,25 +107,25 @@ export const authProviderClient: AuthProvider = {
     };
   },
   getPermissions: async () => {
-    const auth = Cookies.get("auth");
-    if (auth) {
-      const parsedUser = JSON.parse(auth);
-      return parsedUser.roles;
+    const auth = readAuthCookie();
+    if (auth?.admin?.role) {
+      return [auth.admin.role];
     }
     return null;
   },
   getIdentity: async () => {
-    const auth = Cookies.get("auth");
-    if (auth) {
-      const parsedUser = JSON.parse(auth);
-      return parsedUser;
+    const auth = readAuthCookie();
+    if (auth?.admin) {
+      return auth.admin;
     }
     return null;
   },
   onError: async (error) => {
-    if (error.response?.status === 401) {
+    if (error?.response?.status === 401) {
+      Cookies.remove("auth", { path: "/" });
       return {
         logout: true,
+        redirectTo: "/login",
       };
     }
 

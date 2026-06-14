@@ -1,3 +1,4 @@
+import { ShowView, ShowViewHeader } from "@/components/refine-ui/views/show-view";
 "use client";
 
 import { ShowView } from "@/components/refine-ui/views/show-view";
@@ -11,12 +12,13 @@ import {
 import { useShow } from "@refinedev/core";
 
 export default function CategoryShow() {
-  const { result: record, query } = useShow({});
+  const { result: record, query } = useShow({ resource: "categories" });
   const { isLoading } = query;
 
   return (
     <ShowView>
-      <Card>
+      <ShowViewHeader />
+<Card>
         <CardHeader>
           <CardTitle>{record?.title}</CardTitle>
           <CardDescription>Category ID: {record?.id}</CardDescription>
