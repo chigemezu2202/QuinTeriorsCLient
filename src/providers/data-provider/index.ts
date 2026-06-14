@@ -9,7 +9,7 @@ import type {
     GetOneResponse,
 } from "@refinedev/core";
 
-const API_URL = "http://localhost:8000/api/v1";
+const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
 const authHttpClient = axiosInstance;
 

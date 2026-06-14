@@ -1,4 +1,3 @@
-import { EditView, EditViewHeader } from "@/components/refine-ui/views/edit-view";
 "use client";
 
 import { Textarea } from "@/components/ui/textarea";
@@ -6,7 +5,7 @@ import { useSelect } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import { useRouter } from "next/navigation";
 
-import { EditView } from "@/components/refine-ui/views/edit-view";
+import { EditView, EditViewHeader } from "@/components/refine-ui/views/edit-view";
 import { Button } from "@/components/ui/button";
 import {
   Form,
