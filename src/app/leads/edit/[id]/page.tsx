@@ -1,4 +1,3 @@
-import { EditView, EditViewHeader } from "@/components/refine-ui/views/edit-view";
 "use client";
 
 import { Textarea } from "@/components/ui/textarea";
@@ -6,7 +5,7 @@ import { useSelect } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import { useRouter } from "next/navigation";
 
-import { EditView } from "@/components/refine-ui/views/edit-view";
+import { EditView, EditViewHeader } from "@/components/refine-ui/views/edit-view";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -29,8 +28,11 @@ export default function LeadsEdit() {
     refineCoreProps: {},
   });
 
-  const { options: serviceOptions } = useSelect({ resource: "services" });
-
+  const { options: serviceOptions } = useSelect({
+    resource: "services",
+    optionLabel: "name",
+    optionValue: "id",
+});
 
   function onSubmit(values: Record<string, any>) {
     onFinish(values);
@@ -117,8 +119,12 @@ export default function LeadsEdit() {
               <FormItem>
                 <FormLabel>Service</FormLabel>
                 <FormControl>
-                  <Select
+                  {/* <Select
                     onValueChange={field.onChange}
+                    value={field.value ? String(field.value) : ""}
+                  > */}
+                  <Select
+                    onValueChange={(value) => field.onChange(Number(value))}
                     value={field.value ? String(field.value) : ""}
                   >
                     <FormControl>
@@ -128,7 +134,11 @@ export default function LeadsEdit() {
                     </FormControl>
                     <SelectContent>
                       {serviceOptions?.map((option) => (
-                        <SelectItem key={option.value} value={String(option.value)}>
+                        <SelectItem
+                          key={option.value}
+                          value={String(option.value)}
+                        >
+                          {/* {option.label} */}
                           {option.label}
                         </SelectItem>
                       ))}

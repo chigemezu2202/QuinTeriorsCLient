@@ -10,6 +10,7 @@ import { ShowButton } from "@/components/refine-ui/buttons/show";
 import { DataTable } from "@/components/refine-ui/data-table/data-table";
 import { ListView, ListViewHeader } from "@/components/refine-ui/views/list-view";
 import { Badge } from "@/components/ui/badge";
+import { BaseRecord, GetListResponse } from "@refinedev/core";
 
 type Settings = {
   id: string;
@@ -132,9 +133,16 @@ export default function SettingsList() {
     refineCoreProps: {
       resource: "settings",
       syncWithLocation: true,
-    },
+      pagination: {
+        currentPage: 1, // Use 'current' (or 'currentPage' depending on version)
+        pageSize: 10,
+        mode: "server", // Ensures pagination logic is active
+      },
+    }
   });
-
+  // onsole.log("Table Data:", table.getRowModel().rows);
+  // console.log("Is Pagination:", table.reactTable.options.state.pagination);
+  // console.log("Table Data::", table.reactTable.getRowModel().rows);
   return (
     <ListView>
       <ListViewHeader />

@@ -28,8 +28,12 @@ export default function LeadsCreate() {
     refineCoreProps: {},
   });
 
-  const { options: serviceOptions } = useSelect({ resource: "services" });
-
+  const { options: serviceOptions } = useSelect({
+    resource: "services",
+    optionLabel: "name",
+    optionValue: "id",
+  });
+  console.log("serviceOptions", serviceOptions);
 
   function onSubmit(values: Record<string, any>) {
     onFinish(values);
@@ -38,7 +42,7 @@ export default function LeadsCreate() {
   return (
     <CreateView>
       <CreateViewHeader />
-<Form {...form}>
+      <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}
@@ -116,8 +120,12 @@ export default function LeadsCreate() {
               <FormItem>
                 <FormLabel>Service</FormLabel>
                 <FormControl>
-                  <Select
+                  {/* <Select
                     onValueChange={field.onChange}
+                    value={field.value ? String(field.value) : ""}
+                  > */}
+                  <Select
+                    onValueChange={(value) => field.onChange(Number(value))}
                     value={field.value ? String(field.value) : ""}
                   >
                     <FormControl>

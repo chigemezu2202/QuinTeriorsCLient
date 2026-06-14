@@ -9,7 +9,7 @@ import type {
     GetOneResponse,
 } from "@refinedev/core";
 
-const API_URL = "https://quin-teriors.vercel.app/api/v1";
+const API_URL = "http://localhost:8000/api/v1";
 
 const authHttpClient = axiosInstance;
 
