@@ -1,4 +1,3 @@
-import { ListView, ListViewHeader } from "@/components/refine-ui/views/list-view";
 "use client";
 
 import { useTable } from "@refinedev/react-table";
@@ -9,7 +8,7 @@ import { DeleteButton } from "@/components/refine-ui/buttons/delete";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
 import { ShowButton } from "@/components/refine-ui/buttons/show";
 import { DataTable } from "@/components/refine-ui/data-table/data-table";
-import { ListView } from "@/components/refine-ui/views/list-view";
+import { ListView, ListViewHeader } from "@/components/refine-ui/views/list-view";
 import { Badge } from "@/components/ui/badge";
 
 type Gallery = {
@@ -57,10 +56,10 @@ export default function GalleryList() {
   }, []);
 
   const table = useTable({
-    resource: "gallery",
     columns,
     refineCoreProps: {
       syncWithLocation: true,
+      resource: "gallery",
     },
   });
 

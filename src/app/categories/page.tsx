@@ -1,11 +1,10 @@
-import { ListView, ListViewHeader } from "@/components/refine-ui/views/list-view";
 "use client";
 
 import { DeleteButton } from "@/components/refine-ui/buttons/delete";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
 import { ShowButton } from "@/components/refine-ui/buttons/show";
 import { DataTable } from "@/components/refine-ui/data-table/data-table";
-import { ListView } from "@/components/refine-ui/views/list-view";
+import { ListView, ListViewHeader } from "@/components/refine-ui/views/list-view";
 import { useTable } from "@refinedev/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
@@ -47,17 +46,17 @@ export default function CategoryList() {
   }, []);
 
   const table = useTable({
-    resource: "categories",
     columns,
     refineCoreProps: {
       syncWithLocation: true,
+      resource: "categories",
     },
   });
 
   return (
     <ListView>
       <ListViewHeader />
-<DataTable table={table} />
+      <DataTable table={table} />
     </ListView>
   );
 }

@@ -1,4 +1,3 @@
-import { EditView, EditViewHeader } from "@/components/refine-ui/views/edit-view";
 "use client";
 
 import { Textarea } from "@/components/ui/textarea";
@@ -6,7 +5,7 @@ import { useSelect } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import { useRouter } from "next/navigation";
 
-import { EditView } from "@/components/refine-ui/views/edit-view";
+import { EditView, EditViewHeader } from "@/components/refine-ui/views/edit-view";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -26,10 +25,10 @@ export default function GalleryEdit() {
     refineCore: { onFinish, query },
     ...form
   } = useForm({
-    resource: "gallery",
-    action: "edit",
-
-    refineCoreProps: {},
+    refineCoreProps: {
+      resource: "gallery",
+      action: "edit",
+    },
   });
 
 
@@ -41,7 +40,7 @@ export default function GalleryEdit() {
   return (
     <EditView>
       <EditViewHeader />
-<Form {...form}>
+      <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}

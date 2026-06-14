@@ -1,7 +1,6 @@
-import { ShowView, ShowViewHeader } from "@/components/refine-ui/views/show-view";
 "use client";
 
-import { ShowView } from "@/components/refine-ui/views/show-view";
+import { ShowView, ShowViewHeader } from "@/components/refine-ui/views/show-view";
 import {
   Card,
   CardContent,
@@ -18,7 +17,7 @@ export default function CategoryShow() {
   return (
     <ShowView>
       <ShowViewHeader />
-<Card>
+      <Card>
         <CardHeader>
           <CardTitle>{record?.title}</CardTitle>
           <CardDescription>Category ID: {record?.id}</CardDescription>

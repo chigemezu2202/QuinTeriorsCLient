@@ -25,10 +25,10 @@ export default function SettingsCreate() {
     refineCore: { onFinish },
     ...form
   } = useForm({
-    resource: "settings",
-    action: "create",
-
-    refineCoreProps: {},
+      refineCoreProps: {
+      resource: "settings",
+      action: "create",
+       },
   });
 
 

@@ -1,4 +1,3 @@
-import { CreateView, CreateViewHeader } from "@/components/refine-ui/views/create-view";
 "use client";
 
 import { Textarea } from "@/components/ui/textarea";
@@ -6,7 +5,7 @@ import { useSelect } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import { useRouter } from "next/navigation";
 
-import { CreateView } from "@/components/refine-ui/views/create-view";
+import { CreateView, CreateViewHeader } from "@/components/refine-ui/views/create-view";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -26,10 +25,10 @@ export default function GalleryCreate() {
     refineCore: { onFinish },
     ...form
   } = useForm({
-    resource: "gallery",
-    action: "create",
-
-    refineCoreProps: {},
+    refineCoreProps: {
+      resource: "gallery",
+      action: "create",
+      },
   });
 
 
