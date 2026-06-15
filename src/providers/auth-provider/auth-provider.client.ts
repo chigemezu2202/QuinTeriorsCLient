@@ -3,7 +3,12 @@
 import type { AuthProvider } from "@refinedev/core";
 import Cookies from "js-cookie";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+// 1. Get the base domain and provide a safe fallback for local development
+const BASE_DOMAIN = process.env.NEXT_PUBLIC_API_URL || "";
+
+// 2. Safely combine them using a clean URL formatting check
+const API_URL = `${BASE_DOMAIN.replace(/\/$/, "")}/api/v1`;
+
 // const API_URL = "http://localhost:8000/api/v1";
 // const API_URL = "https://quin-teriors.vercel.app/api/v1";
 

@@ -9,7 +9,11 @@ import type {
     GetOneResponse,
 } from "@refinedev/core";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+// 1. Get the base domain and provide a safe fallback for local development
+const BASE_DOMAIN = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
+// 2. Safely combine them using a clean URL formatting check
+const API_URL = `${BASE_DOMAIN.replace(/\/$/, "")}/api/v1`;
 
 const authHttpClient = axiosInstance;
 
