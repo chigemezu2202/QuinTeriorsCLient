@@ -65,6 +65,13 @@ export const RefineContext = ({ children }: RefineContextProps) => {
               },
             },
             {
+              name: "leads-trash",
+              list: "/leads/trash",
+              meta: {
+                label: "Lead Trash",
+              },
+            },
+            {
               name: "services",
               list: "/services",
               create: "/services/create",

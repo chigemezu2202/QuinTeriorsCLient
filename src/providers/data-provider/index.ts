@@ -51,10 +51,29 @@ const baseProvider = dataProviderSimpleRest(API_URL, authHttpClient);
 export const dataProvider = {
     ...baseProvider,
 
-    getList: async (params: GetListParams) : Promise<GetListResponse<any>> => {
-       const  { resource, pagination, filters, sorters } = params;
+    getList: async (params: GetListParams): Promise<GetListResponse<any>> => {
+
+        const { resource, pagination, filters, sorters } = params;
         const page = pagination?.currentPage || 1;
         const limit = pagination?.pageSize || 10;
+
+        // alert(`GET LIST RESOURCE = ${resource}`);
+        if (resource === "leads-trash") {
+            const res = await authHttpClient.get(
+                `${API_URL}/leads/trash`, {
+                params: {
+                    page,
+                    limit,
+                    sortField: sorters?.[0]?.field,
+                    sortOrder: sorters?.[0]?.order,
+                },
+            });
+
+            return {
+                data: res.data.data.items,  // 👈 FIX HERE
+                total: res.data.data.total,  // 👈 FIX HERE
+            };
+        }
 
         const res = await authHttpClient.get(`${API_URL}/${resource}`, {
             params: {
@@ -62,14 +81,13 @@ export const dataProvider = {
                 limit,
             },
         });
-
         return {
             data: res.data.data.items,   // 👈 FIX HERE
             total: res.data.data.total,  // 👈 FIX HERE
         };
     },
 
-    getOne: async (params: GetOneParams) : Promise<GetOneResponse<any>> => {
+    getOne: async (params: GetOneParams): Promise<GetOneResponse<any>> => {
         const { resource, id } = params;
         const res = await authHttpClient.get(`${API_URL}/${resource}/${id}`);
 
@@ -77,4 +95,15 @@ export const dataProvider = {
             data: res.data.data || res.data, // 👈 depending on your successResponse
         };
     },
+
+    restoreLead: async (id: number) => {
+        const res = await authHttpClient.patch(
+            `${API_URL}/leads/${id}/restore`
+        );
+
+        return {
+            data: res.data.data,
+        };
+    },
+
 };

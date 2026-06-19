@@ -4,6 +4,8 @@ import { useTable } from "@refinedev/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { DeleteButton } from "@/components/refine-ui/buttons/delete";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
 import { ShowButton } from "@/components/refine-ui/buttons/show";
@@ -88,7 +90,15 @@ export default function LeadsList() {
 
   return (
     <ListView>
-      <ListViewHeader />
+      <div className="flex justify-between items-center mb-4">
+        <ListViewHeader />
+
+        <Link href="/leads/trash">
+          <Button variant="outline">
+            Trash
+          </Button>
+        </Link>
+      </div>
       <DataTable table={table} />
     </ListView>
   );
