@@ -1,15 +1,14 @@
 "use client";
 
-import dataProviderSimpleRest, { axiosInstance } from "@refinedev/simple-rest";
-import Cookies from "js-cookie";
 import type {
     CrudFilter,
     GetListParams,
     GetOneParams,
-    GetListResponse,
     GetOneResponse,
-    LogicalFilter,
+    LogicalFilter
 } from "@refinedev/core";
+import dataProviderSimpleRest, { axiosInstance } from "@refinedev/simple-rest";
+import Cookies from "js-cookie";
 
 // 1. Get the base domain and provide a safe fallback for local development
 const BASE_DOMAIN = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
