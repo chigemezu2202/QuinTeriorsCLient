@@ -11,7 +11,10 @@ import { EditButton } from "@/components/refine-ui/buttons/edit";
 import { ShowButton } from "@/components/refine-ui/buttons/show";
 import { DataTable } from "@/components/refine-ui/data-table/data-table";
 import { ListView, ListViewHeader } from "@/components/refine-ui/views/list-view";
-import { Badge } from "@/components/ui/badge";
+import {
+  LeadsColumnHeader,
+  LeadsTableToolbar,
+} from "./_components/leads-table-controls";
 
 type Leads = {
   id: string;
@@ -21,6 +24,8 @@ type Leads = {
   message?: string | null;
   service_id?: string | number;
   status?: string | number;
+  created_at?: string | null;
+  updated_at?: string | null;
 };
 
 export default function LeadsList() {
@@ -30,33 +35,48 @@ export default function LeadsList() {
     return [
       columnHelper.accessor('name', {
         id: 'name',
-        header: 'Name',
+        header: ({ column }) => (
+          <LeadsColumnHeader column={column} title="Name" />
+        ),
         enableSorting: true,
       }),
       columnHelper.accessor('phone', {
         id: 'phone',
         header: 'Phone',
-        enableSorting: true,
+        enableSorting: false,
       }),
       columnHelper.accessor('email', {
         id: 'email',
         header: 'Email',
-        enableSorting: true,
+        enableSorting: false,
       }),
       columnHelper.accessor('message', {
         id: 'message',
         header: 'Message',
-        enableSorting: true,
+        enableSorting: false,
       }),
       columnHelper.accessor('service_id', {
         id: 'service_id',
         header: 'Service',
-        enableSorting: true,
+        enableSorting: false,
       }),
       columnHelper.accessor('status', {
         id: 'status',
-        header: 'Status',
+        header: ({ column }) => (
+          <LeadsColumnHeader column={column} title="Status" />
+        ),
         enableSorting: true,
+      }),
+      columnHelper.accessor('created_at', {
+        id: 'created_at',
+        header: ({ column }) => (
+          <LeadsColumnHeader column={column} title="Created At" />
+        ),
+        enableSorting: true,
+        cell: ({ getValue }) =>
+          getValue()
+            ? new Date(getValue() as string).toLocaleString()
+            : "-",
       }),
 
       columnHelper.display({
@@ -85,6 +105,18 @@ export default function LeadsList() {
         pageSize: 10,
         mode: "server", // Ensures pagination logic is active
       },
+      filters: {
+        mode: "server",
+      },
+      sorters: {
+        initial: [
+          {
+            field: "created_at",
+            order: "desc",
+          },
+        ],
+        mode: "server",
+      },
     }
   });
 
@@ -99,6 +131,7 @@ export default function LeadsList() {
           </Button>
         </Link>
       </div>
+      <LeadsTableToolbar table={table} />
       <DataTable table={table} />
     </ListView>
   );

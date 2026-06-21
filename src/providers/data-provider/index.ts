@@ -3,10 +3,12 @@
 import dataProviderSimpleRest, { axiosInstance } from "@refinedev/simple-rest";
 import Cookies from "js-cookie";
 import type {
+    CrudFilter,
     GetListParams,
     GetOneParams,
     GetListResponse,
     GetOneResponse,
+    LogicalFilter,
 } from "@refinedev/core";
 
 // 1. Get the base domain and provide a safe fallback for local development
@@ -47,6 +49,54 @@ authHttpClient.interceptors.request.use((config) => {
 // ✅ BASE PROVIDER
 const baseProvider = dataProviderSimpleRest(API_URL, authHttpClient);
 
+const isLogicalFilter = (filter: CrudFilter): filter is LogicalFilter => {
+    return "field" in filter;
+};
+
+const getFilterValue = (filters: CrudFilter[] | undefined, field: string) => {
+    const filter = filters?.find((item) => {
+        return isLogicalFilter(item) && item.field === field;
+    });
+
+    if (!filter || !isLogicalFilter(filter)) {
+        return undefined;
+    }
+
+    const value = Array.isArray(filter.value) ? filter.value[0] : filter.value;
+
+    if (typeof value === "string") {
+        const trimmed = value.trim();
+        return trimmed.length > 0 ? trimmed : undefined;
+    }
+
+    return value ?? undefined;
+};
+
+const buildLeadListParams = ({
+    page,
+    limit,
+    filters,
+    sorters,
+}: {
+    page: number;
+    limit: number;
+    filters?: CrudFilter[];
+    sorters?: GetListParams["sorters"];
+}) => {
+    const sorter = sorters?.[0];
+    const status = getFilterValue(filters, "status");
+    const search = getFilterValue(filters, "search");
+
+    return {
+        page,
+        limit,
+        sortField: sorter?.field,
+        sortOrder: sorter?.order?.toUpperCase(),
+        status,
+        search,
+    };
+};
+
 // ✅ OVERRIDE ONLY WHAT IS BROKEN
 export const dataProvider = {
     ...baseProvider,
@@ -61,17 +111,33 @@ export const dataProvider = {
         if (resource === "leads-trash") {
             const res = await authHttpClient.get(
                 `${API_URL}/leads/trash`, {
-                params: {
+                params: buildLeadListParams({
                     page,
                     limit,
-                    sortField: sorters?.[0]?.field,
-                    sortOrder: sorters?.[0]?.order,
-                },
+                    filters,
+                    sorters,
+                }),
             });
 
             return {
                 data: res.data.data.items,  // 👈 FIX HERE
                 total: res.data.data.total,  // 👈 FIX HERE
+            };
+        }
+
+        if (resource === "leads") {
+            const res = await authHttpClient.get(`${API_URL}/leads`, {
+                params: buildLeadListParams({
+                    page,
+                    limit,
+                    filters,
+                    sorters,
+                }),
+            });
+
+            return {
+                data: res.data.data.items,
+                total: res.data.data.total,
             };
         }
 
